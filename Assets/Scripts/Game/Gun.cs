@@ -205,9 +205,25 @@ public class Gun : MonoBehaviour
         //     new Vector3{ x = director.position.x, y = director.position.y, z = director.position.y }, 
         //     Quaternion.Euler(director.rotation.x, director.rotation.y, director.rotation.z)
         // );
-        
-        SpawnBullet(director.position, director.rotation);
-    }
+
+        if (shotgun)
+        { 
+            float spread = shotgunSpread / (shotgunBullets - 1.0f);
+            float startingAngle = -shotgunSpread / 2;
+            
+            for (int i = 0; i < shotgunBullets; i++)
+            {
+                float angle = startingAngle + i * spread;
+                Quaternion bulletRotation = director.rotation * Quaternion.Euler(0, 0, angle);
+                
+                SpawnBullet(director.position, bulletRotation);
+            }
+        }
+        else
+        {
+            SpawnBullet(director.position, director.rotation);
+        }
+    }   
 
     /// <summary>
     /// Spawn a single bullet using provided transform as a director.
