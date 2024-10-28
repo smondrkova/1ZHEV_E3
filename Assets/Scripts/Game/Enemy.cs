@@ -74,6 +74,19 @@ public class Enemy : MonoBehaviour
          *    Use mRigidBody.MovePosition to move the enemy
          * Implement a simple AI, which will head towards the closest player and follow them.
          */
+        
+        GameObject nearestPlayer = GameManager.Instance.NearestPlayer(transform.position);
+        if (nearestPlayer != null)
+        {
+            Vector3 playerPos = nearestPlayer.transform.position;
+            Vector3 playerDir = (playerPos - transform.position).normalized;
+            
+            Quaternion targetRotation = Quaternion.LookRotation(playerDir, Vector3.forward);
+            
+            Vector3 newPosition = transform.position + playerDir * speed * Time.deltaTime;
+            mRigidBody.MovePosition(newPosition);
+        }
+        
     }
 
     /// <summary>
