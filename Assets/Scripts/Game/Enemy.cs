@@ -82,6 +82,7 @@ public class Enemy : MonoBehaviour
             Vector3 playerDir = (playerPos - transform.position).normalized;
             
             Quaternion targetRotation = Quaternion.LookRotation(playerDir, Vector3.forward);
+            transform.rotation = targetRotation;
             
             Vector3 newPosition = transform.position + playerDir * speed * Time.deltaTime;
             mRigidBody.MovePosition(newPosition);
